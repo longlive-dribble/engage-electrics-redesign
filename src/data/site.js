@@ -34,6 +34,8 @@ export const site = {
   // coordinates pulled from the GBP listing (confirmed 2026-06-24).
   gbpUrl: 'https://maps.app.goo.gl/9miSQrFen4o6g8jF8',
   geo: { lat: -36.082226, lng: 146.9222859 },
+  facebook: 'https://www.facebook.com/engage.electrics',
+  instagram: 'https://www.instagram.com/engage.electrics',
 
   // Real Google Business Profile figures (replaces the earlier 4.9 placeholder).
   rating: '5.0',
