@@ -1,0 +1,38 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import Owner from '../components/Owner.astro';
+import Why from '../components/Why.astro';
+import Motif from '../components/Motif.astro';
+import { site } from '../data/site.js';
+---
+
+<PageLayout
+  title="About | Engage Electrics · Award-winning Albury Wodonga Electricians"
+  description="Albury-Wodonga based, award-winning electricians proudly employing local people and apprentices across NE Victoria and Southern NSW."
+  heading="Proudly local, right here on The Border"
+  sub="Albury-Wodonga based, award-winning, and built on a reputation for being friendly, prompt and reliable."
+  crumb="About"
+>
+  <!-- credentials strip -->
+  <section class="relative bg-white py-14 lg:py-16">
+    <div class="mx-auto max-w-7xl px-5 lg:px-8">
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+        {site.guarantees.map((g, i) => (
+          <div class="reveal-up rounded-2xl border border-brand-secondary/8 bg-brand-surface p-5" style={`--d:${i * 50}ms`}>
+            <span class="grid h-9 w-9 place-items-center rounded-lg bg-brand-primary text-white">
+              <Motif class="h-4 w-4" variant="bolt" />
+            </span>
+            <p class="mt-3.5 font-heading text-[15px] font-extrabold leading-tight tracking-[-0.01em] text-brand-secondary">{g.label}</p>
+            <p class="mt-1.5 font-body text-[13px] leading-snug text-brand-muted">{g.sub}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- the local story (reuses the home page's Owner block) -->
+  <Owner site={site} />
+
+  <!-- why choose us + stats (reuses the home page's Why block) -->
+  <Why site={site} />
+</PageLayout>

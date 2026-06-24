@@ -1,0 +1,40 @@
+---
+import Layout from '../layouts/Layout.astro';
+import StickyHeader from '../components/StickyHeader.astro';
+import Hero from '../components/Hero.astro';
+import GuaranteeBar from '../components/GuaranteeBar.astro';
+import Awards from '../components/Awards.astro';
+import Services from '../components/Services.astro';
+import CallBanner from '../components/CallBanner.astro';
+import Why from '../components/Why.astro';
+import Owner from '../components/Owner.astro';
+import Reviews from '../components/Reviews.astro';
+import FinalCTA from '../components/FinalCTA.astro';
+import Footer from '../components/Footer.astro';
+import MobileCallBar from '../components/MobileCallBar.astro';
+import ScrollReveal from '../components/ScrollReveal.astro';
+import { site } from '../data/site.js';
+
+// All page content lives in src/data/site.js, the single source of truth shared
+// by the home page and every interior page. Re-skin = edit that one file + theme.css.
+---
+
+<Layout title="Engage Electrics | Albury Wodonga Electrician, Solar & Electrical Contractor" description={site.hero.subhead}>
+  <StickyHeader name={site.name} logo={site.logo} phone={site.phone} phoneHref={site.phoneHref} nav={site.nav} />
+
+  <main>
+    <Hero site={site} />
+    <GuaranteeBar guarantees={site.guarantees} offers={site.offers} />
+    <Awards site={site} />
+    <Services site={site} />
+    <CallBanner site={site} />
+    <Why site={site} />
+    <Owner site={site} />
+    <Reviews site={site} />
+    <FinalCTA site={site} />
+  </main>
+
+  <Footer site={site} />
+  <MobileCallBar site={site} />
+  <ScrollReveal />
+</Layout>

@@ -1,0 +1,48 @@
+---
+/*
+  Awards.astro — Master Electricians Australia State Excellence Awards badge strip.
+  Real badges scraped from the live site (Winner 2025 + multi-year finalists).
+*/
+import Motif from './Motif.astro';
+interface Props {
+  site: any;
+}
+const { site } = Astro.props;
+
+const awards = [
+  { src: '/img/award-winner-2025.png', alt: 'Winner 2025, Bill Bartley Service Excellence Award, Master Electricians Australia State Excellence Awards' },
+  { src: '/img/award-finalist-meoy-2025.png', alt: 'Finalist 2025, Master Electrician of the Year' },
+  { src: '/img/award-finalist-meoy-2024.png', alt: 'Finalist 2024, Master Electrician of the Year' },
+  { src: '/img/award-finalist-sba-2024.png', alt: 'Finalist 2024, Service Business Award' },
+  { src: '/img/award-finalist-meoy-2023.png', alt: 'Finalist 2023, Master Electrician of the Year' },
+  { src: '/img/award-finalist-sba-2023.png', alt: 'Finalist 2023, Service Business Award' },
+];
+---
+<section id="awards" class="relative overflow-hidden border-y border-brand-secondary/8 bg-white py-16 lg:py-20">
+  <Motif class="pointer-events-none absolute -right-12 -top-8 h-60 w-auto text-brand-primary/[0.04]" variant="bolt" />
+  <div class="relative mx-auto max-w-7xl px-5 lg:px-8">
+    <div class="mx-auto max-w-2xl text-center">
+      <span class="reveal-up inline-flex items-center gap-2 font-heading text-[12px] font-bold uppercase tracking-[0.22em] text-brand-primary">
+        <Motif class="h-3.5 w-3.5" variant="bolt" /> Award-winning
+      </span>
+      <h2 class="reveal-up mt-4 font-heading text-[clamp(1.7rem,4vw,2.6rem)] font-extrabold leading-[1.05] tracking-[-0.03em] text-brand-secondary">
+        Recognised at the Master Electricians State Excellence Awards
+      </h2>
+      <p class="reveal-up mx-auto mt-3 max-w-xl font-body text-[1.02rem] text-brand-muted">
+        Winner in 2025, and a finalist every year since 2023 for Master Electrician of the Year and Service Business of the Year.
+      </p>
+    </div>
+
+    <div class="reveal-up mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-6 sm:gap-x-9 lg:gap-x-12">
+      {awards.map((a) => (
+        <img
+          src={a.src}
+          alt={a.alt}
+          class="h-28 w-auto drop-shadow-sm transition-transform duration-300 hover:scale-105 sm:h-32"
+          loading="lazy"
+          decoding="async"
+        />
+      ))}
+    </div>
+  </div>
+</section>

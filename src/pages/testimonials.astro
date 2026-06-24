@@ -1,0 +1,15 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import Reviews from '../components/Reviews.astro';
+import { site } from '../data/site.js';
+---
+
+<PageLayout
+  title="Testimonials | Engage Electrics · What the Border Says"
+  description="What homeowners, builders and businesses across Albury-Wodonga say about Engage Electrics. Friendly, prompt and reliable."
+  heading="What the Border says about us"
+  sub="Homeowners, builders and businesses across Albury-Wodonga, NE Victoria and Southern NSW."
+  crumb="Testimonials"
+>
+  <Reviews site={site} />
+</PageLayout>

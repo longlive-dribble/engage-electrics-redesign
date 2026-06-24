@@ -1,0 +1,119 @@
+---
+/*
+  CallbackForm.astro — short callback form, the SECONDARY conversion path.
+  Includes the QUALIFYING service-type dropdown (improvement over the reference's
+  vague "How can we help?"). Phone-first: a big Call line sits above the form.
+  No backend wired — submit is a graceful no-op success state (drop in your
+  form handler / Formspree / Netlify forms at the marked spot).
+
+  Props:
+    site     — brand object
+    variant  — 'hero' (light card on dark) | 'panel' (final-CTA panel)
+    id       — unique form id (two instances on the page)
+*/
+interface Props {
+  site: any;
+  variant?: 'hero' | 'panel';
+  id: string;
+}
+const { site, variant = 'hero', id } = Astro.props;
+---
+<form
+  id={id}
+  class:list={[
+    'callback-form rounded-2xl border bg-white p-6 shadow-2xl shadow-brand-secondary/15 sm:p-7',
+    variant === 'panel' ? 'border-brand-accent/30 ring-1 ring-brand-accent/20' : 'border-brand-secondary/8',
+  ]}
+  data-callback
+>
+  <div class="flex items-center gap-3">
+    <span class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-brand-primary text-white">
+      <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M6.6 10.8a15.5 15.5 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.3 2.1Z" />
+      </svg>
+    </span>
+    <div>
+      <p class="font-heading text-[18px] font-extrabold tracking-[-0.01em] text-brand-secondary">Get a fast callback</p>
+      <p class="font-body text-[13px] text-brand-muted">Prefer to talk now? <a href={site.phoneHref} class="font-bold text-brand-primary underline-offset-2 hover:underline">{site.phone}</a></p>
+    </div>
+  </div>
+
+  <div class="callback-fields mt-5 grid gap-3.5">
+    <div class="grid gap-3.5 sm:grid-cols-2">
+      <label class="block">
+        <span class="form-label">Your name</span>
+        <input type="text" name="name" required autocomplete="name" placeholder="Your name" class="form-input" />
+      </label>
+      <label class="block">
+        <span class="form-label">Phone</span>
+        <input type="tel" name="phone" required autocomplete="tel" placeholder="04xx xxx xxx" class="form-input" />
+      </label>
+    </div>
+
+    <!-- QUALIFYING dropdown (the upgrade over the reference) -->
+    <label class="block">
+      <span class="form-label">What do you need done?</span>
+      <div class="relative">
+        <select name="service" required class="form-input appearance-none pr-10">
+          <option value="" disabled selected>Choose a service…</option>
+          {site.services.map((s: any) => <option value={s.title}>{s.title}</option>)}
+          <option value="Emergency, call ASAP">Emergency, call ASAP</option>
+          <option value="Something else">Something else</option>
+        </select>
+        <svg class="pointer-events-none absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-brand-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </label>
+
+    <label class="block">
+      <span class="form-label">Suburb <span class="font-normal text-brand-muted/70">(optional)</span></span>
+      <input type="text" name="suburb" autocomplete="address-level2" placeholder="e.g. Wodonga" class="form-input" />
+    </label>
+
+    <!-- DROP-IN: wire your form handler (Formspree/Netlify) on this button's form -->
+    <button type="submit" class="group mt-1 inline-flex items-center justify-center gap-2 rounded-xl bg-brand-primary px-6 py-3.5 font-heading text-[16px] font-extrabold tracking-tight text-white shadow-lg shadow-brand-primary/25 transition-all hover:bg-brand-secondary active:scale-[0.98]">
+      Request my callback
+      <svg class="h-4 w-4 transition-transform group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <p class="text-center font-body text-[12px] text-brand-muted">{site.callbackMicrocopy}</p>
+  </div>
+
+  <!-- success state -->
+  <div class="callback-success hidden flex-col items-center py-6 text-center">
+    <span class="grid h-14 w-14 place-items-center rounded-full bg-green-100 text-green-600">
+      <svg class="h-7 w-7" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.5 17.6 4.4 12.5l1.6-1.6 3.5 3.5 8.5-8.5 1.6 1.6-10.1 10.1Z"/></svg>
+    </span>
+    <p class="mt-3 font-heading text-[19px] font-extrabold text-brand-secondary">Thanks. We'll call you back.</p>
+    <p class="mt-1 font-body text-[14px] text-brand-muted">Usually within the hour during business times. In a hurry? Call <a href={site.phoneHref} class="font-bold text-brand-primary">{site.phone}</a>.</p>
+  </div>
+</form>
+
+<style>
+  @reference "../styles/global.css";
+  .form-label {
+    @apply mb-1.5 block font-body text-[13px] font-bold text-brand-secondary;
+  }
+  .form-input {
+    @apply w-full rounded-xl border border-brand-secondary/12 bg-brand-surface px-4 py-3 font-body text-[15px] text-brand-text outline-none transition-all;
+  }
+  .form-input::placeholder { @apply text-brand-muted/60; }
+  .form-input:focus {
+    @apply border-brand-primary bg-white ring-4 ring-brand-primary/12;
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    // guard: only wire forms once even though this script ships per-instance
+    document.querySelectorAll('form[data-callback]:not([data-wired])').forEach((form) => {
+      form.setAttribute('data-wired', 'true');
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        // DROP-IN: replace this block with your real submit (fetch to Formspree/Netlify).
+        const fields = form.querySelector('.callback-fields');
+        if (fields) fields.style.display = 'none';
+        const ok = form.querySelector('.callback-success');
+        if (ok) { ok.classList.remove('hidden'); ok.classList.add('flex'); }
+      });
+    });
+  })();
+</script>

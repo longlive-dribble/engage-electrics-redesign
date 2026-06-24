@@ -1,0 +1,54 @@
+---
+/*
+  Why.astro — "Why choose us" 6-point grid + the count-up Stats band.
+  Asymmetric: a sticky lead column on the left, points on the right.
+*/
+import Motif from './Motif.astro';
+import Stats from './Stats.astro';
+interface Props {
+  site: any;
+}
+const { site } = Astro.props;
+---
+<section id="why" class="relative bg-white py-20 lg:py-28">
+  <div class="mx-auto max-w-7xl px-5 lg:px-8">
+    <div class="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
+      <!-- LEFT lead -->
+      <div class="lg:sticky lg:top-28 lg:self-start">
+        <span class="reveal-up inline-flex items-center gap-2 font-heading text-[12px] font-bold uppercase tracking-[0.22em] text-brand-primary">
+          <Motif class="h-3.5 w-3.5" variant="bolt" /> Why {site.name}
+        </span>
+        <h2 class="reveal-up mt-4 font-heading text-[clamp(2rem,4.5vw,3.2rem)] font-extrabold leading-[1.02] tracking-[-0.03em] text-brand-secondary">
+          {site.whyHeading}
+        </h2>
+        <p class="reveal-up mt-5 max-w-md font-body text-[1.08rem] leading-relaxed text-brand-muted">{site.whySub}</p>
+        <a href={site.phoneHref} class="reveal-up mt-7 inline-flex items-center gap-2.5 rounded-full bg-brand-secondary px-6 py-3.5 font-heading text-[15px] font-extrabold text-white shadow-lg transition-all hover:bg-brand-primary active:scale-95">
+          <svg class="h-4 w-4 text-brand-accent" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.5 15.5 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.3 2.1Z"/></svg>
+          Talk to {site.owner.name}
+        </a>
+      </div>
+
+      <!-- RIGHT points -->
+      <div>
+        <div class="grid gap-3.5 sm:grid-cols-2">
+          {site.why.map((w: any, i: number) => (
+            <div class="reveal-left flex items-start gap-3.5 rounded-2xl border border-brand-secondary/8 bg-brand-surface p-5 transition-colors hover:border-brand-primary/25" style={`--d:${i * 60}ms`}>
+              <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brand-primary text-white">
+                <Motif class="h-4 w-4" variant="bolt" />
+              </span>
+              <div>
+                <p class="font-heading text-[16px] font-extrabold leading-tight tracking-[-0.01em] text-brand-secondary">{w.title}</p>
+                <p class="mt-1 font-body text-[13.5px] leading-snug text-brand-muted">{w.sub}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <!-- count-up stats -->
+        <div class="reveal-up mt-5">
+          <Stats stats={site.stats} />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

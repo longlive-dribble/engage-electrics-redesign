@@ -1,0 +1,7 @@
+/* Self-hosted variable fonts. Font @imports MUST come before the Tailwind import. */
+@import '@fontsource-variable/archivo';
+@import '@fontsource-variable/hanken-grotesk';
+
+@import "tailwindcss";
+@import "./theme.css";
+@import "./base.css";

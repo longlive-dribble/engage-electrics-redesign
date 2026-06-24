@@ -1,0 +1,85 @@
+---
+/*
+  Footer.astro — brand sign-off, contact details, service-area list, licence line.
+  All content from the `site` object.
+*/
+import Motif from './Motif.astro';
+interface Props {
+  site: any;
+}
+const { site } = Astro.props;
+const year = new Date().getFullYear();
+---
+<footer class="relative overflow-hidden bg-brand-secondary pt-16">
+  <div class="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-primary/40 to-transparent"></div>
+
+  <div class="mx-auto max-w-7xl px-5 pb-12 lg:px-8">
+    <div class="grid gap-10 lg:grid-cols-[1.4fr_1fr_1fr_1.1fr]">
+      <!-- brand -->
+      <div>
+        <a href="/" class="flex items-center gap-2.5">
+          <span class="grid h-10 w-10 place-items-center rounded-lg bg-brand-primary text-white">
+            <Motif class="h-5 w-5" variant="bolt" />
+          </span>
+          <span class="font-heading text-[19px] font-extrabold tracking-[-0.02em] text-white">{site.name}</span>
+        </a>
+        <p class="mt-4 max-w-xs font-body text-[14px] leading-relaxed text-white/55">{site.footer.blurb}</p>
+        <p class="mt-4 font-body text-[12.5px] text-white/40">{site.footer.licence}</p>
+      </div>
+
+      <!-- services -->
+      <div>
+        <p class="font-heading text-[12px] font-bold uppercase tracking-[0.18em] text-brand-accent">Services</p>
+        <ul class="mt-4 space-y-2.5">
+          {site.services.slice(0, 6).map((s: any) => (
+            <li><a href="/services" class="font-body text-[14px] text-white/60 transition-colors hover:text-white">{s.title}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- areas -->
+      <div>
+        <p class="font-heading text-[12px] font-bold uppercase tracking-[0.18em] text-brand-accent">Service area</p>
+        <ul class="mt-4 space-y-2.5">
+          {site.footer.areas.map((a: string) => (
+            <li class="flex items-center gap-2 font-body text-[14px] text-white/60">
+              <Motif class="h-3 w-3 text-brand-primary" variant="bolt" /> {a}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- contact -->
+      <div>
+        <p class="font-heading text-[12px] font-bold uppercase tracking-[0.18em] text-brand-accent">Get in touch</p>
+        <a href={site.phoneHref} class="mt-4 flex items-center gap-2.5 font-heading text-[20px] font-extrabold text-white transition-colors hover:text-brand-accent">
+          <svg class="h-5 w-5 text-brand-primary" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.5 15.5 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.3 2.1Z"/></svg>
+          {site.phone}
+        </a>
+        <!-- NAP street address — matches the Google Business Profile exactly (premises 488 Macauley St, entered via COD Lane) -->
+        <a
+          href={site.address.mapsHref}
+          target="_blank"
+          rel="noopener"
+          class="mt-4 flex items-start gap-2.5 font-body text-[14px] not-italic text-white/60 transition-colors hover:text-white"
+        >
+          <svg class="mt-0.5 h-4 w-4 shrink-0 text-brand-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.5"/></svg>
+          <span>{site.address.full}</span>
+        </a>
+        <a href={`mailto:${site.email}`} class="mt-3 block font-body text-[14px] text-white/60 transition-colors hover:text-white">{site.email}</a>
+        <p class="mt-3 font-body text-[14px] text-white/60">{site.footer.hours}</p>
+        <span class="mt-4 inline-flex items-center gap-2 rounded-full bg-white/5 px-3 py-1.5 font-body text-[12.5px] font-semibold text-white/70">
+          <span class="h-2 w-2 rounded-full bg-green-400"></span> {site.footer.statusLine}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- bottom bar -->
+  <div class="border-t border-white/8">
+    <div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-5 py-5 text-center sm:flex-row sm:text-left lg:px-8">
+      <p class="font-body text-[12.5px] text-white/40">© {year} {site.name}. {site.footer.abn}</p>
+      <p class="font-body text-[12.5px] text-white/40">{site.footer.legal}</p>
+    </div>
+  </div>
+</footer>

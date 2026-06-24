@@ -1,0 +1,110 @@
+---
+/*
+  Hero.astro — bold benefit headline + availability promise + dual CTA
+  (Call primary, short callback form secondary) + trust microcopy.
+  Branded navy photo-placeholder panel on the right (real client photo drops in here).
+*/
+import Motif from './Motif.astro';
+import CallbackForm from './CallbackForm.astro';
+interface Props {
+  site: any;
+}
+const { site } = Astro.props;
+---
+<section id="top" class="relative overflow-hidden bg-brand-secondary pt-32 pb-20 lg:pt-40 lg:pb-28">
+  <!-- background depth: grid + glow + giant ghost bolt motif -->
+  <div class="pointer-events-none absolute inset-0">
+    <div class="absolute inset-0 hero-grid opacity-[0.10]"></div>
+    <div class="absolute -top-32 -right-24 h-[34rem] w-[34rem] rounded-full bg-brand-primary/30 blur-[120px]"></div>
+    <div class="absolute -bottom-40 -left-20 h-[28rem] w-[28rem] rounded-full bg-brand-accent/10 blur-[120px]"></div>
+    <Motif class="absolute -right-10 top-10 h-[40rem] w-auto text-white/[0.03] float-slow" variant="bolt" />
+  </div>
+
+  <div class="relative mx-auto grid max-w-7xl items-center gap-12 px-5 lg:grid-cols-[1.15fr_1fr] lg:gap-10 lg:px-8">
+    <!-- LEFT: copy + CTA -->
+    <div>
+      <!-- availability promise eyebrow -->
+      <div class="reveal-down inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/5 py-1.5 pl-2 pr-4 backdrop-blur">
+        <span class="relative flex h-2.5 w-2.5">
+          <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
+          <span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-green-400"></span>
+        </span>
+        <span class="text-[12px] font-bold uppercase tracking-[0.16em] text-white/85">
+          {site.hero.availability}
+        </span>
+      </div>
+
+      <h1 class="reveal-down mt-6 font-heading text-[clamp(2.6rem,6.2vw,4.7rem)] font-extrabold leading-[0.98] tracking-[-0.035em] text-white" style="--d:80ms">
+        {site.hero.headlineTop}
+        <span class="relative inline-block text-brand-accent">
+          {site.hero.headlineAccent}
+          <Motif class="absolute -right-9 -top-3 h-9 w-9 text-brand-accent spark-twinkle" variant="spark" />
+        </span>
+      </h1>
+
+      <p class="reveal-down mt-6 max-w-xl font-body text-[clamp(1.05rem,2vw,1.25rem)] leading-relaxed text-white/75" style="--d:160ms">
+        {site.hero.subhead}
+      </p>
+
+      <!-- CTA row -->
+      <div class="reveal-down mt-9 flex flex-col gap-3 sm:flex-row sm:items-center" style="--d:240ms">
+        <a
+          href={site.phoneHref}
+          class="group inline-flex items-center justify-center gap-3 rounded-full bg-brand-accent px-7 py-4 font-heading text-[17px] font-extrabold tracking-tight text-brand-secondary shadow-xl shadow-brand-accent/20 transition-all hover:bg-white hover:shadow-2xl active:scale-95"
+        >
+          <svg class="h-5 w-5 transition-transform group-hover:rotate-12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M6.6 10.8a15.5 15.5 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.3 2.1Z" />
+          </svg>
+          Call {site.phone}
+        </a>
+        <a href="#callback" class="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 px-6 py-4 font-heading text-[16px] font-bold text-white transition-all hover:border-white/50 hover:bg-white/5">
+          Request a callback
+        </a>
+      </div>
+
+      <!-- trust microcopy -->
+      <div class="reveal-down mt-8 flex flex-wrap items-center gap-x-6 gap-y-2.5" style="--d:320ms">
+        {site.hero.trust.map((t: string) => (
+          <span class="inline-flex items-center gap-2 text-[13.5px] font-semibold text-white/65">
+            <svg class="h-4 w-4 text-brand-accent" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M9.5 17.6 4.4 12.5l1.6-1.6 3.5 3.5 8.5-8.5 1.6 1.6-10.1 10.1Z" />
+            </svg>
+            {t}
+          </span>
+        ))}
+      </div>
+    </div>
+
+    <!-- RIGHT: branded photo strip + the callback form (primary funnel slot) -->
+    <div class="reveal-scale relative" style="--d:200ms">
+      <!-- award trust banner (real 2025 State Excellence Award win) -->
+      <div class="relative mb-4 hidden h-28 overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-r from-brand-primary/90 to-brand-secondary shadow-xl sm:block">
+        <div class="absolute inset-0 hero-grid opacity-[0.14]"></div>
+        <Motif class="absolute -bottom-4 right-6 h-32 w-auto text-white/[0.08]" variant="bolt" />
+        <div class="relative flex h-full items-center gap-4 px-6">
+          <img src="/img/award-winner-2025.png" alt="2025 State Excellence Award Winner" class="h-[5.5rem] w-auto shrink-0 drop-shadow-md" />
+          <div>
+            <p class="font-heading text-[17px] font-extrabold leading-tight text-white">2025 State Excellence Award Winner</p>
+            <p class="mt-1.5 font-body text-[12.5px] leading-snug text-white/80">Master Electricians Australia, plus a finalist every year since 2023.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- the callback form -->
+      <div id="callback">
+        <CallbackForm site={site} id="callback-form-hero" variant="hero" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  @reference "../styles/global.css";
+  .hero-grid {
+    background-image:
+      linear-gradient(rgba(255,255,255,0.4) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.4) 1px, transparent 1px);
+    background-size: 42px 42px;
+    mask-image: radial-gradient(ellipse 90% 70% at 50% 35%, #000 40%, transparent 100%);
+  }
+</style>

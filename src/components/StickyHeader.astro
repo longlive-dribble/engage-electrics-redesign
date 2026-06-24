@@ -1,0 +1,108 @@
+---
+/*
+  StickyHeader.astro — sticky top nav that condenses on scroll.
+  Logo + nav links + an always-reachable phone Call button.
+  Reads brand/phone from the `site` object passed as props.
+*/
+import Motif from './Motif.astro';
+interface Props {
+  name: string;
+  logo?: string;
+  phone: string;
+  phoneHref: string;
+  nav: { label: string; href: string }[];
+}
+const { name, logo, phone, phoneHref, nav } = Astro.props;
+---
+<header id="site-header" class="fixed inset-x-0 top-0 z-50 transition-all duration-300">
+  <div class="header-bar mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 transition-all duration-300 lg:px-8">
+    <!-- Logo -->
+    <a href="/" class="group flex items-center gap-2.5">
+      {logo ? (
+        <img src={logo} alt={name} class="logo-img h-16 w-auto transition-all duration-300" />
+      ) : (
+        <>
+          <span class="logo-mark grid h-10 w-10 place-items-center rounded-lg bg-brand-primary text-white shadow-lg shadow-brand-primary/30 transition-all duration-300">
+            <Motif class="h-5 w-5" variant="bolt" />
+          </span>
+          <span class="logo-text font-heading text-[19px] font-extrabold tracking-[-0.02em] text-brand-secondary transition-colors">
+            {name}
+          </span>
+        </>
+      )}
+    </a>
+
+    <!-- Desktop nav -->
+    <nav class="hidden items-center gap-7 lg:flex">
+      {nav.map((item) => (
+        <a
+          href={item.href}
+          class="nav-link group relative font-body text-[15px] font-semibold text-brand-secondary/80 transition-colors hover:text-brand-primary"
+        >
+          {item.label}
+          <span class="absolute -bottom-1.5 left-0 h-0.5 w-0 bg-brand-accent transition-all duration-300 group-hover:w-full"></span>
+        </a>
+      ))}
+    </nav>
+
+    <!-- Phone CTA -->
+    <a
+      href={phoneHref}
+      class="group flex items-center gap-2.5 rounded-full bg-brand-primary px-4 py-2.5 text-white shadow-lg shadow-brand-primary/25 transition-all duration-300 hover:bg-brand-secondary hover:shadow-xl active:scale-95 sm:px-5"
+    >
+      <span class="grid h-7 w-7 place-items-center rounded-full bg-white/15 transition group-hover:bg-brand-accent group-hover:text-brand-secondary">
+        <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M6.6 10.8a15.5 15.5 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.3 2.1Z" />
+        </svg>
+      </span>
+      <span class="hidden text-left leading-tight sm:block">
+        <span class="block text-[10px] font-bold uppercase tracking-[0.18em] text-white/70">Call now</span>
+        <span class="block font-heading text-[15px] font-extrabold tracking-tight">{phone}</span>
+      </span>
+      <span class="font-heading text-[15px] font-extrabold tracking-tight sm:hidden">Call</span>
+    </a>
+  </div>
+</header>
+
+<script is:inline>
+  (function () {
+    const header = document.getElementById('site-header');
+    if (!header) return;
+    const onScroll = () => {
+      if (window.scrollY > 24) header.classList.add('is-scrolled');
+      else header.classList.remove('is-scrolled');
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  })();
+</script>
+
+<style>
+  @reference "../styles/global.css";
+
+  .header-bar {
+    margin-top: 1.1rem;
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(14px) saturate(140%);
+    border: 1px solid rgba(15, 27, 45, 0.06);
+    box-shadow: 0 4px 24px -8px rgba(15, 27, 45, 0.12);
+  }
+  :global(#site-header.is-scrolled) .header-bar {
+    margin-top: 0;
+    padding-top: 0.45rem;
+    padding-bottom: 0.45rem;
+    border-radius: 0;
+    max-width: 100%;
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 6px 28px -10px rgba(15, 27, 45, 0.22);
+  }
+  :global(#site-header.is-scrolled) .logo-mark {
+    @apply h-9 w-9;
+  }
+  :global(#site-header.is-scrolled) .logo-img {
+    @apply h-12;
+  }
+</style>

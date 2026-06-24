@@ -1,0 +1,33 @@
+---
+/*
+  Motif.astro — the signature brand motif: a lightning bolt / spark.
+  This recurs in 5+ places across the page (header logo, eyebrows, dividers,
+  service icons, inverted banner, footer). Re-skinning a different trade =
+  swap this single SVG (e.g. a wrench for a plumber, a leaf for landscaping).
+
+  Props:
+    class    — utility classes (sizing/colour via currentColor)
+    variant  — 'bolt' (default) | 'spark' (radiant burst) | 'line' (circuit divider)
+*/
+interface Props {
+  class?: string;
+  variant?: 'bolt' | 'spark' | 'line';
+}
+const { class: cls = '', variant = 'bolt' } = Astro.props;
+---
+{variant === 'bolt' && (
+  <svg class={cls} viewBox="0 0 24 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M13.8 1 2 18.2h7.1L8.2 31 22 12.4h-7.4L13.8 1Z" fill="currentColor" />
+  </svg>
+)}
+{variant === 'spark' && (
+  <svg class={cls} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M16 0c.6 6.3 1.4 7.1 7.7 7.7-6.3.6-7.1 1.4-7.7 7.7-.6-6.3-1.4-7.1-7.7-7.7C14.6 7.1 15.4 6.3 16 0Z" fill="currentColor" />
+    <path d="M25.5 17c.4 3.8.9 4.3 4.7 4.7-3.8.4-4.3.9-4.7 4.7-.4-3.8-.9-4.3-4.7-4.7 3.8-.4 4.3-.9 4.7-4.7Z" fill="currentColor" opacity="0.6" />
+  </svg>
+)}
+{variant === 'line' && (
+  <svg class={cls} viewBox="0 0 200 8" fill="none" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M0 4h70l6-3 5 3h28l5 3 6-3h69" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+  </svg>
+)}

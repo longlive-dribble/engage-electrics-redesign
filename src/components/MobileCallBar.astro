@@ -1,0 +1,39 @@
+---
+/*
+  MobileCallBar.astro — fixed full-width bottom call bar (mobile only).
+  Standard for phone-first trade sites: "Call now" primary + "Get a quote".
+  Appears after a little scroll so it doesn't fight the hero CTA.
+*/
+import Motif from './Motif.astro';
+interface Props {
+  site: any;
+}
+const { site } = Astro.props;
+---
+<div id="mobile-call-bar" class="fixed inset-x-0 bottom-0 z-50 translate-y-full transition-transform duration-300 lg:hidden">
+  <div class="border-t border-white/10 bg-brand-secondary/95 px-3 py-2.5 backdrop-blur-xl shadow-[0_-8px_30px_-12px_rgba(0,0,0,0.5)]">
+    <div class="flex items-stretch gap-2.5" style="padding-bottom: env(safe-area-inset-bottom);">
+      <a href={site.phoneHref} class="flex flex-[1.4] items-center justify-center gap-2.5 rounded-xl bg-brand-accent py-3 font-heading text-[16px] font-extrabold tracking-tight text-brand-secondary active:scale-95">
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.5 15.5 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.3 2.1Z"/></svg>
+        Call now
+      </a>
+      <a href="/contact" class="flex flex-1 items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/5 py-3 font-heading text-[15px] font-bold text-white active:scale-95">
+        <Motif class="h-4 w-4 text-brand-accent" variant="bolt" />
+        Get a quote
+      </a>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    const bar = document.getElementById('mobile-call-bar');
+    if (!bar) return;
+    const onScroll = () => {
+      if (window.scrollY > 480) bar.classList.remove('translate-y-full');
+      else bar.classList.add('translate-y-full');
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  })();
+</script>

@@ -1,0 +1,56 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import { site } from '../data/site.js';
+---
+
+<PageLayout
+  title="Our Work | Engage Electrics · Recent Jobs Across the Border"
+  description="See recent electrical, solar, lighting and switchboard work by the Engage Electrics team across Albury-Wodonga, NE Victoria and Southern NSW."
+  heading="Our work across the Border"
+  sub="Real jobs by the local Engage team, from switchboards and solar to lighting and fault finding."
+  crumb="Our Work"
+>
+  <section class="relative bg-white py-20 lg:py-28">
+    <div class="mx-auto max-w-7xl px-5 lg:px-8">
+      <div class="mx-auto max-w-2xl text-center">
+        <h2 class="reveal-up font-heading text-[clamp(1.9rem,4vw,2.8rem)] font-extrabold leading-[1.05] tracking-[-0.03em] text-brand-secondary">{site.workHeading}</h2>
+        <p class="reveal-up mx-auto mt-4 max-w-xl font-body text-[1.05rem] text-brand-muted">{site.workSub}</p>
+      </div>
+
+      <!-- gallery -->
+      <div class="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {site.work.map((w, i) => (
+          <article
+            class="reveal-up group relative overflow-hidden rounded-2xl border border-brand-secondary/8 bg-brand-surface shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-brand-secondary/10"
+            style={`--d:${(i % 3) * 70}ms`}
+          >
+            <div class="relative aspect-[4/3] overflow-hidden">
+              <img
+                src={w.img}
+                alt={`${w.title}, Engage Electrics, Albury-Wodonga`}
+                class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                loading="lazy"
+                decoding="async"
+              />
+              <span class="absolute left-3 top-3 rounded-full bg-brand-primary px-3 py-1 font-heading text-[11px] font-bold uppercase tracking-[0.12em] text-white shadow-lg">{w.category}</span>
+            </div>
+            <div class="p-6">
+              <h3 class="font-heading text-[18px] font-extrabold leading-tight tracking-[-0.01em] text-brand-secondary">{w.title}</h3>
+              <p class="mt-2 font-body text-[14px] leading-relaxed text-brand-muted">{w.blurb}</p>
+            </div>
+          </article>
+        ))}
+
+        <!-- "more coming" tile -->
+        <article class="reveal-up flex flex-col items-center justify-center rounded-2xl border border-dashed border-brand-secondary/20 bg-brand-surface p-8 text-center">
+          <span class="grid h-12 w-12 place-items-center rounded-xl bg-brand-primary/10 font-heading text-[22px] font-extrabold text-brand-primary">+</span>
+          <p class="mt-4 font-heading text-[16px] font-extrabold text-brand-secondary">More jobs on the way</p>
+          <p class="mt-1.5 font-body text-[13.5px] text-brand-muted">We add new work as we go. Want yours done next?</p>
+          <a href={site.phoneHref} class="mt-4 inline-flex items-center gap-2 font-heading text-[14px] font-bold text-brand-primary hover:underline">
+            Call {site.phone}
+          </a>
+        </article>
+      </div>
+    </div>
+  </section>
+</PageLayout>

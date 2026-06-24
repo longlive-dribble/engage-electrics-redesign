@@ -1,0 +1,87 @@
+@layer base {
+  body {
+    @apply bg-brand-bg text-brand-text font-body;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Visible keyboard-focus ring, site-wide (WCAG 2.2 AA 2.4.7).
+     Accent orange gives a 3:1+ ring on both white and charcoal surfaces. */
+  a:focus-visible,
+  button:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 2px solid var(--color-brand-accent);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+}
+
+/*
+  Authored motion utilities (shared across components).
+  - reveal-*  : scroll-reveal start states; .is-visible (set by ScrollReveal) runs them.
+                Multiple reveal TYPES so the page isn't a uniform fade-up.
+  - float-slow / spark-twinkle : autonomous ambient motion on motif elements.
+  --d is a per-element stagger delay set inline.
+*/
+@layer utilities {
+  .reveal-up,
+  .reveal-down,
+  .reveal-left,
+  .reveal-scale {
+    opacity: 0;
+    transition:
+      opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--d, 0ms);
+    will-change: opacity, transform;
+  }
+  .reveal-up    { transform: translateY(34px); }
+  .reveal-down  { transform: translateY(-22px); }
+  .reveal-left  { transform: translateX(36px); }
+  .reveal-scale { transform: scale(0.94); }
+
+  .reveal-up.is-visible,
+  .reveal-down.is-visible,
+  .reveal-left.is-visible,
+  .reveal-scale.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  .float-slow {
+    animation: float-slow 9s ease-in-out infinite;
+  }
+  @keyframes float-slow {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50%      { transform: translateY(-18px) rotate(2deg); }
+  }
+
+  .spark-twinkle {
+    animation: spark-twinkle 3.2s ease-in-out infinite;
+    transform-origin: center;
+  }
+  @keyframes spark-twinkle {
+    0%, 100% { opacity: 1; transform: scale(1) rotate(0deg); }
+    50%      { opacity: 0.55; transform: scale(0.82) rotate(18deg); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal-up, .reveal-down, .reveal-left, .reveal-scale {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+    .float-slow, .spark-twinkle { animation: none !important; }
+  }
+}

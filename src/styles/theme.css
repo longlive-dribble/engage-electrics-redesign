@@ -1,0 +1,22 @@
+/*
+  Local Service Trust template — brand tokens.
+  Token -> utility mapping:
+    --color-brand-*  -> bg-brand-*, text-brand-*, border-brand-*, ring-brand-*
+    --font-*         -> font-heading, font-body
+
+  RE-SKIN: to rebrand for a new client, change ONLY the 7 colours + 2 fonts below.
+  Everything on the page is built from these tokens.
+*/
+@theme {
+  /* Engage Electrics brand palette — orange + charcoal (from logo SVG: #F47D30 / #4D5858) */
+  --color-brand-primary:   #F47D30; /* Engage orange — CTAs */
+  --color-brand-secondary: #3C4140; /* deep charcoal (Engage grey family, deepened for dark sections) */
+  --color-brand-accent:    #F59E3D; /* lighter orange — highlights, stars, badges */
+  --color-brand-bg:        #FFFFFF;
+  --color-brand-surface:   #F6F5F3; /* warm light section bg */
+  --color-brand-text:      #2A2E2E;
+  --color-brand-muted:     #6A7170;
+
+  --font-heading: 'Archivo Variable', system-ui, sans-serif;
+  --font-body:    'Hanken Grotesk Variable', system-ui, sans-serif;
+}

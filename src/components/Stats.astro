@@ -1,0 +1,64 @@
+---
+/*
+  Stats.astro — count-up stat band. Numbers animate from 0 when scrolled into view.
+  data-target drives the count-up; suffix/prefix preserved. Used inside Why.
+*/
+interface Props {
+  stats: { value: string; label: string }[];
+}
+const { stats } = Astro.props;
+
+// parse "3,000+" -> { num: 3000, prefix:'', suffix:'+' }, "4.9" -> decimal, "24/7" -> static
+function parse(v: string) {
+  const m = v.match(/^([^\d]*)([\d,.]+)(.*)$/);
+  if (!m) return { num: null, prefix: '', suffix: v, decimals: 0 };
+  const raw = m[2].replace(/,/g, '');
+  const decimals = raw.includes('.') ? raw.split('.')[1].length : 0;
+  return { num: parseFloat(raw), prefix: m[1], suffix: m[3], decimals };
+}
+const parsed = stats.map((s) => ({ ...s, ...parse(s.value) }));
+---
+<div class="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-brand-secondary/8 bg-brand-secondary/8 lg:grid-cols-4">
+  {parsed.map((s) => (
+    <div class="bg-white p-6 text-center lg:p-7">
+      <p
+        class="stat-num font-heading text-[clamp(2.2rem,4vw,3rem)] font-extrabold leading-none tracking-[-0.04em] text-brand-primary"
+        data-target={s.num ?? ''}
+        data-prefix={s.prefix}
+        data-suffix={s.suffix}
+        data-decimals={s.decimals}
+      >{s.num !== null ? `${s.prefix}0${s.suffix}` : s.value}</p>
+      <p class="mt-2 font-body text-[13px] font-semibold uppercase tracking-[0.1em] text-brand-muted">{s.label}</p>
+    </div>
+  ))}
+</div>
+
+<script is:inline>
+  (function () {
+    const nums = document.querySelectorAll('.stat-num[data-target]');
+    if (!nums.length) return;
+    const animate = (el) => {
+      const target = parseFloat(el.dataset.target);
+      if (isNaN(target)) return;
+      const prefix = el.dataset.prefix || '';
+      const suffix = el.dataset.suffix || '';
+      const decimals = parseInt(el.dataset.decimals || '0', 10);
+      const dur = 1500;
+      const start = performance.now();
+      const tick = (now) => {
+        const p = Math.min((now - start) / dur, 1);
+        const eased = 1 - Math.pow(1 - p, 3); // easeOutCubic
+        const val = (target * eased).toFixed(decimals);
+        el.textContent = prefix + Number(val).toLocaleString(undefined, { minimumFractionDigits: decimals, maximumFractionDigits: decimals }) + suffix;
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) { animate(e.target); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.5 });
+    nums.forEach((n) => io.observe(n));
+  })();
+</script>

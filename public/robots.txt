@@ -1,0 +1,9 @@
+# Engage Electrics - production robots.txt
+# CONFIRM PRODUCTION DOMAIN AT GO-LIVE: the Sitemap URL below assumes the site
+# ships at engage-electrics.com.au. If the cutover domain differs (www. prefix,
+# different TLD, or a staging host), update this line AND the `site` value in
+# astro.config.mjs before go-live. Both must match.
+User-agent: *
+Allow: /
+
+Sitemap: https://engage-electrics.com.au/sitemap-index.xml

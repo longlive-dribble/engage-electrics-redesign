@@ -1,0 +1,43 @@
+---
+/*
+  GuaranteeBar.astro — stacked risk-reversal strip + sweetener offers.
+  Overlaps up into the hero (negative margin) for layout tension.
+*/
+import Motif from './Motif.astro';
+interface Props {
+  guarantees: { label: string; sub: string }[];
+  offers: string[];
+}
+const { guarantees, offers } = Astro.props;
+---
+<section class="relative z-10 -mt-12 px-5 lg:px-8">
+  <div class="mx-auto max-w-7xl">
+    <!-- guarantees card -->
+    <div class="reveal-up overflow-hidden rounded-2xl border border-brand-secondary/8 bg-white shadow-2xl shadow-brand-secondary/10">
+      <div class="grid divide-y divide-brand-secondary/8 sm:grid-cols-2 sm:divide-y-0 lg:grid-cols-5 lg:divide-x">
+        {guarantees.map((g, i) => (
+          <div class="reveal-up flex items-start gap-3 p-5 lg:flex-col lg:items-center lg:gap-2.5 lg:p-6 lg:text-center" style={`--d:${i * 70}ms`}>
+            <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-primary/10 text-brand-primary">
+              <Motif class="h-5 w-5" variant="bolt" />
+            </span>
+            <div>
+              <p class="font-heading text-[15px] font-extrabold leading-tight tracking-[-0.01em] text-brand-secondary">{g.label}</p>
+              <p class="mt-0.5 font-body text-[12.5px] leading-snug text-brand-muted">{g.sub}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- sweetener offers ticker -->
+    <div class="reveal-up mt-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 rounded-xl bg-brand-secondary px-5 py-3.5 text-center">
+      <span class="font-heading text-[12px] font-bold uppercase tracking-[0.18em] text-brand-accent">This month</span>
+      {offers.map((o, i) => (
+        <Fragment>
+          {i > 0 && <Motif class="h-3 w-3 text-white/30" variant="bolt" />}
+          <span class="font-body text-[14px] font-semibold text-white/90">{o}</span>
+        </Fragment>
+      ))}
+    </div>
+  </div>
+</section>
