@@ -1,0 +1,111 @@
+---
+/*
+  ServiceIcon.astro — BESPOKE Engage service-icon family.
+
+  Why this exists: the original service cards used single-path Lucide-style
+  glyphs (a power button, a building, a sun, a shield-check). An SEO review
+  flagged them as looking AI/template. This component replaces them with a
+  custom set built around the Engage BOLT MOTIF so the family is unmistakably
+  Engage and clearly NOT a stock icon library.
+
+  Design rules (see GL-003 §5 "Engage icon style"):
+    - 24x24 grid, shared geometry across all four.
+    - Duotone: charcoal/orange STRUCTURE drawn at stroke-width 1.6, plus a solid
+      ORANGE BOLT accent (the recurring signature). The bolt is the same mark as
+      Motif.astro, reproportioned, placed where the "live" energy sits in each
+      metaphor. That solid-fill bolt against line structure is what reads bespoke.
+    - Trade-true metaphors over the predictable ones (panel-yield not a sun;
+      cable junction not a generic shield-check).
+
+  Colour model:
+    - STRUCTURE  -> currentColor (set by the wrapper's text colour).
+    - BOLT       -> the CSS var --bolt, default Engage orange (#F47D30).
+
+  This two-channel model lets the icon stay legible in every chip:
+    · Light orange chip  -> structure charcoal, bolt orange (default).        legible
+    · Hover-invert chip   -> solid orange bg, structure white, bolt orange.    legible
+    · Dark solid-orange chip (detail page) -> set --bolt:#3C4140 (charcoal) on
+      the wrapper so the bolt contrasts against the orange fill; structure white.
+  The bolt SIGNATURE is constant in SHAPE everywhere; only its tint flips when
+  the background would otherwise swallow orange. See GL-003 §5.
+
+  Props:
+    name  — 'power' (Residential) | 'switchboard' (Commercial)
+            | 'level2' (Solar) | 'safety' (Re-wiring & Maintenance)
+            (keys kept identical to site.js service.icon so no data churn)
+    class — sizing + structure colour (currentColor); set --bolt here to retint.
+*/
+interface Props {
+  name: 'power' | 'switchboard' | 'level2' | 'safety' | string;
+  class?: string;
+}
+const { name, class: cls = '' } = Astro.props;
+
+// Bolt tint: wrapper can override with style="--bolt:#3C4140" on orange fills.
+const BOLT = 'var(--bolt, #F47D30)';
+---
+{/* 1 · RESIDENTIAL — a home with one clipped eave; the bolt is the live core inside it */}
+{name === 'power' && (
+  <svg class={cls} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path
+      d="M3.2 11.2 12 4l8.8 7.2M5 9.7V19a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.7"
+      stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"
+    />
+    {/* signature bolt — the live element of the home */}
+    <path d="M12.7 9.2 9.4 14h2l-.6 3.6 3.9-5.3h-2.1l.1-3.1Z" fill={BOLT} />
+  </svg>
+)}
+
+{/* 2 · COMMERCIAL — a shopfront: awning band + roller front, bolt powering the sign */}
+{name === 'switchboard' && (
+  <svg class={cls} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    {/* awning / fascia with one clipped corner echoing the bolt diagonal */}
+    <path
+      d="M4 8 6 4h12l2 4M4 8h16M4 8v11a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V8"
+      stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"
+    />
+    {/* roller-door ribs (the storefront) */}
+    <path d="M8 12.5v6m4-6v6m4-6v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+    {/* signature bolt — powering the premises, sat on the fascia */}
+    <path d="M12.6 8.4 10 12.3h1.6l-.5 2.9 3.1-4.2h-1.7l.1-2.6Z" fill={BOLT} />
+  </svg>
+)}
+
+{/* 3 · SOLAR — a tilted panel array; bolt is the YIELD coming off it (not a sun) */}
+{name === 'level2' && (
+  <svg class={cls} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    {/* panel with internal cell grid, mounted on a stand */}
+    <path
+      d="M3 15 5.6 6.4A1 1 0 0 1 6.6 5.7h9.8a1 1 0 0 1 1 .8L19 15H3Z"
+      stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"
+    />
+    <path d="M4.4 10.2h13.2M9.2 5.7 7.6 15m6-9.3L15 15" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" />
+    <path d="M11 15v3.4M7.4 21h7.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+    {/* signature bolt — the energy yield, radiating up-right off the array */}
+    <path d="M19.2 3 16.7 6.7h1.6l-.5 2.8 3-4.1h-1.7l.1-2.4Z" fill={BOLT} />
+  </svg>
+)}
+
+{/* 4 · RE-WIRING & MAINTENANCE — a dominant JUNCTION BOX with two short conductor
+       stubs landing into it; bolt at the live joint inside.
+       (deliberately NOT a shield-check; re-wiring is about the conductors)
+       Reworked 2026-06-24: box is now the centred, instantly-readable container;
+       the old long outer cable curves are gone, replaced by two short, clearly
+       terminated stubs so nothing reads as a stray flourish. Optically centred. */}
+{name === 'safety' && (
+  <svg class={cls} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    {/* the junction box — the dominant container, centred, with one clipped
+        top-right corner that echoes the bolt diagonal */}
+    <path
+      d="M5.4 7.6a1 1 0 0 1 1-1h8.1l3.5 3.5v6.3a1 1 0 0 1-1 1H6.4a1 1 0 0 1-1-1V7.6Z"
+      stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"
+    />
+    {/* two short conductor stubs landing into the box, each clearly terminated
+        with a gland/terminal node so they read as conductors, not flourishes */}
+    <path d="M2.6 9.6h2.8M9.4 21v-3.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+    <circle cx="2.6" cy="9.6" r="0.95" fill="currentColor" />
+    <circle cx="9.4" cy="21" r="0.95" fill="currentColor" />
+    {/* signature bolt — the live joint inside the junction, centred in the box */}
+    <path d="M12.5 8.2 9.7 12.4h1.8l-.6 3 3.4-4.6h-1.9l.1-2.6Z" fill={BOLT} />
+  </svg>
+)}

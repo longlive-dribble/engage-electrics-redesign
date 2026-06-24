@@ -1,15 +1,8 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
 import Motif from '../components/Motif.astro';
+import ServiceIcon from '../components/ServiceIcon.astro';
 import { site } from '../data/site.js';
-
-// Icon paths (same set the home Services grid uses) keyed by service.icon
-const icons: Record<string, string> = {
-  switchboard: 'M4 4h16v4H4V4Zm0 6h16v10H4V10Zm3 2v4m5-4v4m5-4v4',
-  level2: 'M3 7l9-4 9 4M5 9v10h14V9M9 13h6',
-  power: 'M9 3v6m6-6v6M5 9h14v3a7 7 0 0 1-14 0V9Zm7 10v3',
-  safety: 'M12 2 4 5v6c0 5 3.4 8.6 8 10 4.6-1.4 8-5 8-10V5l-8-3Zm-1.5 9.5 1.5 1.5 3-3',
-};
 ---
 
 <PageLayout
@@ -32,8 +25,8 @@ const icons: Record<string, string> = {
             <div class:list={["relative flex flex-col justify-between overflow-hidden rounded-2xl bg-brand-secondary p-7", i % 2 === 1 && "lg:order-2"]}>
               <Motif class="pointer-events-none absolute -right-6 -top-4 h-40 w-auto text-white/[0.05]" variant="bolt" />
               <div>
-                <span class="grid h-14 w-14 place-items-center rounded-2xl bg-brand-primary text-white shadow-lg shadow-brand-primary/30">
-                  <svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={icons[s.icon]} /></svg>
+                <span class="grid h-14 w-14 place-items-center rounded-2xl bg-brand-primary text-white shadow-lg shadow-brand-primary/30" style="--bolt:#3C4140">
+                  <ServiceIcon class="h-7 w-7" name={s.icon} />
                 </span>
                 <h2 class="mt-6 font-heading text-[clamp(1.6rem,3vw,2.2rem)] font-extrabold leading-[1.05] tracking-[-0.025em] text-white">{s.title}</h2>
                 <p class="mt-3 font-body text-[1.02rem] leading-relaxed text-brand-accent">{s.tagline}</p>
