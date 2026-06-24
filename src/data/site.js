@@ -14,7 +14,7 @@ export const site = {
   phone: '(02) 6021 1510',
   phoneHref: 'tel:+61260211510',
   bookHref: 'https://engage-electrics.com.au/bookings/',
-  email: 'info@engage-electrics.com.au', // FLAG: placeholder address — confirm real inbox with Craig before go-live
+  email: 'office@engage-electrics.com.au', // confirmed real inbox 2026-06-24
   area: 'Albury-Wodonga',
 
   // NAP — Name / Address / Phone, matching the Google Business Profile EXACTLY.
