@@ -27,8 +27,13 @@ export const site = {
     postcode: '2640',
     // Single-line form for inline display (footer / contact detail row)
     full: 'Access via, 488 Macauley Street, COD Ln, Albury NSW 2640',
-    mapsHref: 'https://www.google.com/maps/search/?api=1&query=Engage+Electrics+488+Macauley+Street+Albury+NSW+2640',
+    mapsHref: 'https://maps.app.goo.gl/9miSQrFen4o6g8jF8',
   },
+
+  // Google Business Profile public link (used for schema sameAs) + exact place
+  // coordinates pulled from the GBP listing (confirmed 2026-06-24).
+  gbpUrl: 'https://maps.app.goo.gl/9miSQrFen4o6g8jF8',
+  geo: { lat: -36.082226, lng: 146.9222859 },
 
   // Real Google Business Profile figures (replaces the earlier 4.9 placeholder).
   rating: '5.0',
