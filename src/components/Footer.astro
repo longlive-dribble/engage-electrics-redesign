@@ -71,6 +71,23 @@ const year = new Date().getFullYear();
         <span class="mt-4 inline-flex items-center gap-2 rounded-full bg-white/5 px-3 py-1.5 font-body text-[12.5px] font-semibold text-white/70">
           <span class="h-2 w-2 rounded-full bg-green-400"></span> {site.footer.statusLine}
         </span>
+        {(site.facebook || site.instagram) && (
+          <!-- social profiles (also wired into the LocalBusiness schema sameAs) -->
+          <div class="mt-5 flex items-center gap-2.5">
+            {site.facebook && (
+              <a href={site.facebook} target="_blank" rel="noopener" aria-label="Engage Electrics on Facebook"
+                 class="grid h-9 w-9 place-items-center rounded-lg bg-white/5 text-white/70 transition-colors hover:bg-brand-primary hover:text-white">
+                <svg class="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H8v-2.9h2.4V9.7c0-2.4 1.4-3.7 3.6-3.7 1 0 2.1.2 2.1.2v2.3h-1.2c-1.2 0-1.5.7-1.5 1.5v1.8h2.6l-.4 2.9h-2.2v7A10 10 0 0 0 22 12Z"/></svg>
+              </a>
+            )}
+            {site.instagram && (
+              <a href={site.instagram} target="_blank" rel="noopener" aria-label="Engage Electrics on Instagram"
+                 class="grid h-9 w-9 place-items-center rounded-lg bg-white/5 text-white/70 transition-colors hover:bg-brand-primary hover:text-white">
+                <svg class="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.8"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
+              </a>
+            )}
+          </div>
+        )}
       </div>
     </div>
   </div>
